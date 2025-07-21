@@ -1,11 +1,11 @@
 from .models import Article
 from rest_framework import serializers
-from accounts.serializers import UsePublicSerialize
+from accounts.serializers import UserPublicSerializer
 
 class ArticleSerializer(serializers.ModelSerializer):
     title=  serializers.CharField(required=True)
     content =serializers.CharField(required=True)
-    created_by = UsePublicSerialize(read_only=True)
+    created_by = UserPublicSerializer(read_only=True)
     class Meta:
         model = Article
         fields = ['id','title','content','created_at', 'created_by']
