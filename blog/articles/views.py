@@ -38,6 +38,17 @@ class ArticleUpdateView(APIView):
                 status= status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class ArticleDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+    def delete(self, request, pk):
+        article = get_object_or_404(Article,pk=pk)
+        if article.created_by != request.user:
+            return Response({
+                "Message": "Vous n'avez pas le droit de supprimer cet article"}, status=status.HTTP_403_FORBIDDEN)
+
+        article.delete()
+        return Response({"Message":"Article supprimée"},status=status.HTTP_204_NO_CONTENT)
+
 class ArticleList(APIView):
     permission_classes = [AllowAny]
     
