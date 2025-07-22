@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Article
 from django.shortcuts import get_object_or_404
+from .pagination import ArticlePagination
 
 # Create your views here.
 class ArticleCreatedView(APIView):
@@ -52,10 +53,12 @@ class ArticleDeleteView(APIView):
 class ArticleList(APIView):
     permission_classes = [AllowAny]
     
-    def get(self, Request):
+    def get(self,request):
         articles = Article.objects.all()
-        serializer = ArticleSerializer(articles,many = True)
-        return Response(serializer.data)
+        paginator = ArticlePagination()
+        page = paginator.paginate_queryset(articles, request)
+        serializer = ArticleSerializer(page,many = True)
+        return paginator.get_paginated_response(serializer.data)
 
 class ArticleUniqueView(APIView):
     permission_classes=[AllowAny]
