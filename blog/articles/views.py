@@ -56,3 +56,10 @@ class ArticleList(APIView):
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles,many = True)
         return Response(serializer.data)
+
+class ArticleUniqueView(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,pk):
+        article = get_object_or_404(Article, pk=pk)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
