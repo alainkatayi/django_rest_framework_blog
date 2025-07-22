@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import ArticleSerializer
 from rest_framework.response import Response
@@ -7,6 +8,7 @@ from rest_framework import status
 from .models import Article
 from django.shortcuts import get_object_or_404
 from .pagination import ArticlePagination
+from rest_framework.filters import SearchFilter
 
 # Create your views here.
 class ArticleCreatedView(APIView):
@@ -50,15 +52,22 @@ class ArticleDeleteView(APIView):
         article.delete()
         return Response({"Message":"Article supprimée"},status=status.HTTP_204_NO_CONTENT)
 
-class ArticleList(APIView):
+class ArticleList(ListAPIView):
     permission_classes = [AllowAny]
     
-    def get(self,request):
-        articles = Article.objects.all()
-        paginator = ArticlePagination()
-        page = paginator.paginate_queryset(articles, request)
-        serializer = ArticleSerializer(page,many = True)
-        return paginator.get_paginated_response(serializer.data)
+    # def get(self,request):
+    #     articles = Article.objects.all()
+    #     paginator = ArticlePagination()
+    #     page = paginator.paginate_queryset(articles, request)
+    #     serializer = ArticleSerializer(page,many = True)
+    #     return paginator.get_paginated_response(serializer.data)
+
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    pagination_class = ArticlePagination
+    
+    filter_backends = [SearchFilter]
+    search_fields = ['title','content']
 
 class ArticleUniqueView(APIView):
     permission_classes=[AllowAny]
