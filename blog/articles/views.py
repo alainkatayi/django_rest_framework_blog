@@ -21,7 +21,7 @@ class ArticleCreatedView(APIView):
                 "Message": "Article crée avec succès",
                 "article": ArticleSerializer(article).data},
                 status= status.HTTP_201_CREATED)
-        return Response(serializer.erro,status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
 class ArticleUpdateView(APIView):
     permission_classes = [IsAuthenticated]
