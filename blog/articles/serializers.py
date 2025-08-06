@@ -7,6 +7,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     introduction = serializers.CharField(required=True)
     content =serializers.CharField(required=True)
     created_by = UserPublicSerializer(read_only=True)
+    created_at = serializers.DateTimeField(format="%d/%m/%Y",read_only=True)
     class Meta:
         model = Article
         fields = ['id','title','introduction','content','created_at', 'created_by']
