@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .serializers import ArticleSerializer
+from .serializers import ArticleSerializer,CategorySerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Article
@@ -75,3 +75,18 @@ class ArticleUniqueView(APIView):
         article = get_object_or_404(Article, pk=pk)
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
+
+#view pour la création d'une category
+class CategoryCreateView(APIView):
+    permission_classes =[IsAuthenticated]
+
+    def post(self,request):
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            category = serializer.save()
+            return Response({
+                "Message": "Catégory créé avec success",
+                "category":CategorySerializer(category).data
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
