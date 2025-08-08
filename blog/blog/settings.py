@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'articles',
-    'corsheaders'
+    'corsheaders',
+    'profiles'
 ]
 
 MIDDLEWARE = [
