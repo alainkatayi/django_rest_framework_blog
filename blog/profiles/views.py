@@ -118,3 +118,8 @@ class DeleteCertificationView(APIView):
         certfication = get_object_or_404(Certifications,pk=pk)
         certfication.delete()
         return Response({"Message":"Certification Delete"}, status=status.HTTP_204_NO_CONTENT)
+    
+class ListCertificationsView(ListAPIView):
+    permission_classes = [AllowAny]
+    queryset = Certifications.objects.all()
+    serializer_class = CertificationsSerializer
