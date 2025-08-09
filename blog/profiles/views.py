@@ -40,3 +40,11 @@ class SkillsListView(ListAPIView):
     permission_classes = [AllowAny]
     queryset = Skills.objects.all()
     serializer_class = SkillsSerializer
+
+class SkillDeletedView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, pk):
+        skill = get_object_or_404(Skills, pk =pk)
+        skill.delete()
+        return Response({"Message": "Skill deleted "}, status=status.HTTP_204_NO_CONTENT)
