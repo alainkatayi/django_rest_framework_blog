@@ -100,7 +100,7 @@ class CreateCertificationView(APIView):
         return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class UpdateCertication(APIView):
+class UpdateCerticationView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, pk):
@@ -110,3 +110,11 @@ class UpdateCertication(APIView):
             certification_serializer.save()
             return Response({"Message":"Certification Update", "Certification":certification_serializer.data},status=status.HTTP_201_CREATED)
         return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class DeleteCertificationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self,request,pk):
+        certfication = get_object_or_404(Certifications,pk=pk)
+        certfication.delete()
+        return Response({"Message":"Certification Delete"}, status=status.HTTP_204_NO_CONTENT)
