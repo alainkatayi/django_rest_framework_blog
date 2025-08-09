@@ -2,10 +2,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .serializers import SkillsSerializer, ExperiencesSerializer
+from .serializers import SkillsSerializer, ExperiencesSerializer,CertificationsSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Skills, Experiences
+from .models import Skills, Experiences, Certifications
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
@@ -88,3 +88,38 @@ class ListExperienceView(ListAPIView):
     permission_classes = [AllowAny]
     queryset = Experiences.objects.all()
     serializer_class = ExperiencesSerializer
+
+class CreateCertificationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        certification_serializer = CertificationsSerializer(data=request.data)
+        if certification_serializer.is_valid():
+            certification = certification_serializer.save()
+            return Response({"Message":"certication create", "Certification": CertificationsSerializer(certification).data},status= status.HTTP_201_CREATED)
+        return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class UpdateCerticationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, pk):
+        certification = get_object_or_404(Certifications,pk=pk)
+        certification_serializer = CertificationsSerializer(certification,data =request.data)
+        if certification_serializer.is_valid():
+            certification_serializer.save()
+            return Response({"Message":"Certification Update", "Certification":certification_serializer.data},status=status.HTTP_201_CREATED)
+        return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class DeleteCertificationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self,request,pk):
+        certfication = get_object_or_404(Certifications,pk=pk)
+        certfication.delete()
+        return Response({"Message":"Certification Delete"}, status=status.HTTP_204_NO_CONTENT)
+    
+class ListCertificationsView(ListAPIView):
+    permission_classes = [AllowAny]
+    queryset = Certifications.objects.all()
+    serializer_class = CertificationsSerializer
