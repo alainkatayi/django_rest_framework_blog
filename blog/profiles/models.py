@@ -25,6 +25,9 @@ class Experiences(SoftDeleteModel):
     current_job = models.BooleanField(default=False)
     description = models.TextField()
 
+    objects = SoftDeleteManager() ## seulement actif
+    all_objects = models.Manager() # tout
+
     def __str__(self):
         return self.description
 
