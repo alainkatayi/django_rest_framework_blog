@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import SkillsSerializer, ExperiencesSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Skills
+from .models import Skills, Experiences
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
@@ -60,4 +60,18 @@ class CreateExperienceView(APIView):
                 "Message":"Experience Crated",
                 "Experience":ExperiencesSerializer(experience).data
             },status = status.HTTP_201_CREATED)
+        return Response(experience_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class UpdateExperienceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self,request, pk):
+        experience = get_object_or_404(Experiences,pk=pk)
+        experience_serializer = ExperiencesSerializer(experience, data= request.data)
+        if experience_serializer.is_valid():
+            experience_serializer.save()
+            return Response({
+                "Message":"Experience update",
+                "Experience": experience_serializer.data
+            },status=status.HTTP_201_CREATED)
         return Response(experience_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
