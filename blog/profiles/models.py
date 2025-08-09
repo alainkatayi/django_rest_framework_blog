@@ -35,3 +35,9 @@ class Certifications(SoftDeleteModel):
     name = models.CharField(max_length=200)
     organisme = models.CharField(max_length=200)
     obtaining_date = models.DateField()
+
+    objects = SoftDeleteManager() ## seulement actif
+    all_objects = models.Manager() # tout
+
+    def __str__(self):
+        return self.description
