@@ -75,3 +75,11 @@ class UpdateExperienceView(APIView):
                 "Experience": experience_serializer.data
             },status=status.HTTP_201_CREATED)
         return Response(experience_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class DeleteExperienceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request,pk):
+        experience = get_object_or_404(Experiences,pk=pk)
+        experience.delete()
+        return Response({"Message":"Experience Delete"}, status=status.HTTP_204_NO_CONTENT)
