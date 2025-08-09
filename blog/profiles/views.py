@@ -83,3 +83,8 @@ class DeleteExperienceView(APIView):
         experience = get_object_or_404(Experiences,pk=pk)
         experience.delete()
         return Response({"Message":"Experience Delete"}, status=status.HTTP_204_NO_CONTENT)
+    
+class ListExperienceView(ListAPIView):
+    permission_classes = [AllowAny]
+    queryset = Experiences.objects.all()
+    serializer_class = ExperiencesSerializer
