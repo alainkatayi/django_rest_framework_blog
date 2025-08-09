@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from articles.models import Categories
 from articles.serializers import CategorySerializer
-from .models import Skills, Experiences
+from .models import Skills, Experiences, Certifications
 
 class SkillsSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
@@ -31,3 +31,12 @@ class ExperiencesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiences
         fields = ['id','job_title','entreprise_name','start_date','end_date','current_job','description']
+
+class CertificationsSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(required = True)
+    organisme = serializers.CharField(required=True)
+    obtaining_date = serializers.DateField(required=True)
+
+    class Meta:
+        model = Certifications
+        fields = ['id','name','organisme','obtaining_date']

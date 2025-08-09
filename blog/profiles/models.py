@@ -31,3 +31,7 @@ class Experiences(SoftDeleteModel):
     def __str__(self):
         return self.description
 
+class Certifications(SoftDeleteModel):
+    name = models.CharField(max_length=200)
+    organisme = models.CharField(max_length=200)
+    obtaining_date = models.DateField()
