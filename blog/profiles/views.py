@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .serializers import SkillsSerializer
+from .serializers import SkillsSerializer, ExperiencesSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Skills
@@ -48,3 +48,16 @@ class SkillDeletedView(APIView):
         skill = get_object_or_404(Skills, pk =pk)
         skill.delete()
         return Response({"Message": "Skill deleted "}, status=status.HTTP_204_NO_CONTENT)
+    
+class CreateExperienceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self,request):
+        experience_serializer = ExperiencesSerializer(data= request.data)
+        if experience_serializer.is_valid():
+            experience= experience_serializer.save()
+            return Response({
+                "Message":"Experience Crated",
+                "Experience":ExperiencesSerializer(experience).data
+            },status = status.HTTP_201_CREATED)
+        return Response(experience_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
