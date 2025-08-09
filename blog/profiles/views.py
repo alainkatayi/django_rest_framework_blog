@@ -2,10 +2,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .serializers import SkillsSerializer, ExperiencesSerializer
+from .serializers import SkillsSerializer, ExperiencesSerializer,CertificationsSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Skills, Experiences
+from .models import Skills, Experiences, Certifications
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
@@ -88,3 +88,13 @@ class ListExperienceView(ListAPIView):
     permission_classes = [AllowAny]
     queryset = Experiences.objects.all()
     serializer_class = ExperiencesSerializer
+
+class CreateCertificationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        certification_serializer = CertificationsSerializer(data=request.data)
+        if certification_serializer.is_valid():
+            certification = certification_serializer.save()
+            return Response({"Message":"certication create", "Certification": CertificationsSerializer(certification).data},status= status.HTTP_201_CREATED)
+        return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
