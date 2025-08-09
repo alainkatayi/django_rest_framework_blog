@@ -98,3 +98,15 @@ class CreateCertificationView(APIView):
             certification = certification_serializer.save()
             return Response({"Message":"certication create", "Certification": CertificationsSerializer(certification).data},status= status.HTTP_201_CREATED)
         return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class UpdateCertication(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, pk):
+        certification = get_object_or_404(Certifications,pk=pk)
+        certification_serializer = CertificationsSerializer(certification,data =request.data)
+        if certification_serializer.is_valid():
+            certification_serializer.save()
+            return Response({"Message":"Certification Update", "Certification":certification_serializer.data},status=status.HTTP_201_CREATED)
+        return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
