@@ -3,21 +3,21 @@ from .views import CreateSkillView, SkillsListView,SkillUpdateView,SkillDeletedV
 
 urlpatterns = [
     #_____skill-routes___________
-    path('create/skill/',CreateSkillView.as_view(), name='create-skill'),
+    path('skills/create/',CreateSkillView.as_view(), name='create-skill'),
     path('skills/',SkillsListView.as_view(), name='skills-list'),
-    path('<int:pk>/update/skill/',SkillUpdateView.as_view(), name='update-skill'),
-    path('<int:pk>/delete/skill/',SkillDeletedView.as_view(), name='delete-skill'),
+    path('<int:pk>/skills/update/',SkillUpdateView.as_view(), name='update-skill'),
+    path('<int:pk>/skills/delete/',SkillDeletedView.as_view(), name='delete-skill'),
 
     #_____experience-routes_______
-    path('create/experience/',CreateExperienceView.as_view(), name='create-experience'),
-    path('<int:pk>/update/experience/',UpdateExperienceView.as_view(), name='update-experience'),
-    path('<int:pk>/delete/experience/',DeleteExperienceView.as_view(), name='delete-experience'),
-    path('experience/',ListExperienceView.as_view(), name='list-experience'),
+    path('experiences/create/',CreateExperienceView.as_view(), name='create-experience'),
+    path('<int:pk>/experiences/update/',UpdateExperienceView.as_view(), name='update-experience'),
+    path('<int:pk>/experiences/delete/',DeleteExperienceView.as_view(), name='delete-experience'),
+    path('experiences/',ListExperienceView.as_view(), name='list-experience'),
 
     #______certication-routes____________
-    path('create/certification/',CreateCertificationView.as_view(),name='create-certification'),
-    path('<int:pk>/update/certification/',UpdateCerticationView.as_view(), name='update-certification'),
-    path('<int:pk>/delete/certification/',DeleteCertificationView.as_view(), name='delete-certification'),
+    path('certification/create/',CreateCertificationView.as_view(),name='create-certification'),
+    path('<int:pk>/certifications/update/',UpdateCerticationView.as_view(), name='update-certification'),
+    path('<int:pk>/certifications/delete/',DeleteCertificationView.as_view(), name='delete-certification'),
     path('certifications/',ListCertificationsView.as_view(), name='list-certification'),
 
 
