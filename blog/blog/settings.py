@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'accounts',
     'articles',
     'corsheaders',
-    'profiles'
+    'profiles',
+    'project'
 ]
 
 MIDDLEWARE = [
