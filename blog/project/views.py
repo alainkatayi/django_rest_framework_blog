@@ -6,6 +6,7 @@ from .serializers import ProjectSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Projects
+from rest_framework.generics import ListAPIView
 
 # Create your views here.
 class ProjectCreateView(APIView):
@@ -18,5 +19,10 @@ class ProjectCreateView(APIView):
                 "Message":"Project create",
                 "project": ProjectSerializer(project).data},status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProjectListView(ListAPIView):
+    permission_classes = [AllowAny]
+    queryset = Projects.objects.all()
+    serializer_class = ProjectSerializer
 
 
