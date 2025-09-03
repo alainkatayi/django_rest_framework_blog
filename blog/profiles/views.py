@@ -110,6 +110,13 @@ class UpdateCerticationView(APIView):
             certification_serializer.save()
             return Response({"Message":"Certification Update", "Certification":certification_serializer.data},status=status.HTTP_201_CREATED)
         return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CertificationUniqueView(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,pk):
+        certification = get_object_or_404(Certifications, pk=pk)
+        serializer = CertificationsSerializer(certification)
+        return Response(serializer.data)
     
 class DeleteCertificationView(APIView):
     permission_classes = [IsAuthenticated]
