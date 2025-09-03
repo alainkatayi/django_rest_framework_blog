@@ -36,6 +36,13 @@ class SkillUpdateView(APIView):
             },status = status.HTTP_201_CREATED)
         return Response(skill_serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
+class SkillUniqueView(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,pk):
+        skill = get_object_or_404(Skills, pk=pk)
+        serializer = SkillsSerializer(skill)
+        return Response(serializer.data)
+    
 class SkillsListView(ListAPIView):
     permission_classes = [AllowAny]
     queryset = Skills.objects.all()
@@ -76,6 +83,13 @@ class UpdateExperienceView(APIView):
             },status=status.HTTP_201_CREATED)
         return Response(experience_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class ExperienceUniqueView(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,pk):
+        experience = get_object_or_404(Experiences, pk=pk)
+        serializer = ExperiencesSerializer(experience)
+        return Response(serializer.data)
+    
 class DeleteExperienceView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -110,6 +124,13 @@ class UpdateCerticationView(APIView):
             certification_serializer.save()
             return Response({"Message":"Certification Update", "Certification":certification_serializer.data},status=status.HTTP_201_CREATED)
         return Response(certification_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CertificationUniqueView(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,pk):
+        certification = get_object_or_404(Certifications, pk=pk)
+        serializer = CertificationsSerializer(certification)
+        return Response(serializer.data)
     
 class DeleteCertificationView(APIView):
     permission_classes = [IsAuthenticated]
