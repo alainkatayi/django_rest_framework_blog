@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import CreateSkillView, SkillsListView,SkillUpdateView,SkillDeletedView,CreateExperienceView,UpdateExperienceView, DeleteExperienceView, ListExperienceView,CreateCertificationView,UpdateCerticationView,DeleteCertificationView,ListCertificationsView,CertificationUniqueView
+from .views import CreateSkillView, SkillsListView,SkillUpdateView,SkillDeletedView,CreateExperienceView,UpdateExperienceView, DeleteExperienceView, ListExperienceView,CreateCertificationView,UpdateCerticationView,DeleteCertificationView,ListCertificationsView,CertificationUniqueView,SkillUniqueView
 
 urlpatterns = [
     #_____skill-routes___________
     path('skills/create/',CreateSkillView.as_view(), name='create-skill'),
     path('skills/',SkillsListView.as_view(), name='skills-list'),
     path('<int:pk>/skills/update/',SkillUpdateView.as_view(), name='update-skill'),
+    path('<int:pk>/skill/',SkillUniqueView.as_view(), name='unique-skill'),
     path('<int:pk>/skills/delete/',SkillDeletedView.as_view(), name='delete-skill'),
 
     #_____experience-routes_______

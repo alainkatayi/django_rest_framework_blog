@@ -36,6 +36,13 @@ class SkillUpdateView(APIView):
             },status = status.HTTP_201_CREATED)
         return Response(skill_serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
+class SkillUniqueView(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,pk):
+        skill = get_object_or_404(Skills, pk=pk)
+        serializer = SkillsSerializer(skill)
+        return Response(serializer.data)
+    
 class SkillsListView(ListAPIView):
     permission_classes = [AllowAny]
     queryset = Skills.objects.all()
