@@ -83,6 +83,13 @@ class UpdateExperienceView(APIView):
             },status=status.HTTP_201_CREATED)
         return Response(experience_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class ExperienceUniqueView(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,pk):
+        experience = get_object_or_404(Experiences, pk=pk)
+        serializer = ExperiencesSerializer(experience)
+        return Response(serializer.data)
+    
 class DeleteExperienceView(APIView):
     permission_classes = [IsAuthenticated]
 
