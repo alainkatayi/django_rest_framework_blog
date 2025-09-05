@@ -39,4 +39,18 @@ class DeleteProjectView(APIView):
         project = get_object_or_404(Projects,pk=pk)
         project.delete()
         return Response({"Message":"Experience Delete"}, status=status.HTTP_204_NO_CONTENT)
+    
+class UpdateProjectView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self,request,pk):
+        project = get_object_or_404(Projects,pk=pk)
+        project_serializer = ProjectSerializer(project,data=request.data)
+        if(project_serializer.is_valid()):
+            project_serializer.save()
+            return Response({
+                "Message":"Project update",
+                "Project":project_serializer.data
+            },status=status.HTTP_201_CREATED)
+        return Response(project_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
