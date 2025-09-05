@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -25,4 +25,10 @@ class ProjectListView(ListAPIView):
     queryset = Projects.objects.all()
     serializer_class = ProjectSerializer
 
+class ProjectUniqueView(APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,pk):
+        project = get_object_or_404(Projects, pk=pk)
+        serializer = ProjectSerializer(project)
+        return Response(serializer.data)
 
