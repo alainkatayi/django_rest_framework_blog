@@ -31,4 +31,12 @@ class ProjectUniqueView(APIView):
         project = get_object_or_404(Projects, pk=pk)
         serializer = ProjectSerializer(project)
         return Response(serializer.data)
+    
+class DeleteProjectView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request,pk):
+        project = get_object_or_404(Projects,pk=pk)
+        project.delete()
+        return Response({"Message":"Experience Delete"}, status=status.HTTP_204_NO_CONTENT)
 
