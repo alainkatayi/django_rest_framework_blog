@@ -11,14 +11,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     description = serializers.CharField(required=True)
     created_at = serializers.DateField(format="%d/%m/%Y",required=True)
     category = CategorySerializer(read_only=True)
-    technology_ids=serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset = Skills.objects.all(),
-        required = True,
-        write_only=True,
-        source='technology'
-    )
-    technology=SkillsSerializer(many=True,read_only=True)
+    technology = serializers.JSONField(required=True)
     status=serializers.BooleanField(required=True)
     category_id = serializers.PrimaryKeyRelatedField(
         queryset =Categories.objects.all(),
@@ -29,5 +22,5 @@ class ProjectSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Projects
-        fields = ['id','name','description','created_at', 'status','technology_ids','category_id','category','technology']
+        fields = ['id','name','description','created_at', 'status','technology','category_id','category']
         read_only_fields=['category']

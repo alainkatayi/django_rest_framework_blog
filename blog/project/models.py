@@ -11,7 +11,7 @@ class Projects(SoftDeleteModel):
     created_at = models.DateField()
     category = models.ForeignKey(Categories, on_delete=models.CASCADE,related_name='projects')
     status = models.BooleanField(default=False)
-    technology = models.ManyToManyField(Skills, blank=True)
+    technology = models.JSONField(blank=True, default=list)
 
     objects = SoftDeleteManager()
     all_objects = models.Manager()
