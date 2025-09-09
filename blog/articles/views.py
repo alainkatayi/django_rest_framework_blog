@@ -9,10 +9,12 @@ from .models import Article, Categories
 from django.shortcuts import get_object_or_404
 from .pagination import ArticlePagination
 from rest_framework.filters import SearchFilter
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create your views here.
 class ArticleCreatedView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
     def post(self, request):
         serializer = ArticleSerializer(data=request.data)
         if serializer.is_valid():
