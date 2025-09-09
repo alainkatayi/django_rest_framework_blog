@@ -27,7 +27,8 @@ class ArticleSerializer(serializers.ModelSerializer):
     content =serializers.CharField(required=True)
     created_by = UserPublicSerializer(read_only=True)
     created_at = serializers.DateTimeField(format="%d/%m/%Y",read_only=True)
+    image = serializers.ImageField()
     class Meta:
         model = Article
-        fields = ['id','title','introduction','content','created_at', 'created_by','category','category_id']
+        fields = ['id','title','introduction','content','created_at', 'created_by','category','category_id','image']
         read_only_fields = ['created_by','created_at','category']

@@ -18,7 +18,7 @@ class RegisterView(APIView):
             return Response({
                 "Message": "Compte créé avec succès"}, status=status.HTTP_201_CREATED
                 )
-        return Response(serialiser.error, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serialiser.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 class UserList(APIView):
