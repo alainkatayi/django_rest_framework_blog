@@ -19,8 +19,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         write_only = True, 
         required = True
     )
+    image = serializers.ImageField()
     
     class Meta:
         model = Projects
-        fields = ['id','name','description','created_at', 'status','technology','category_id','category']
+        fields = ['id','name','description','created_at', 'status','technology','category_id','category','image']
         read_only_fields=['category']
