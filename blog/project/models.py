@@ -12,6 +12,8 @@ class Projects(SoftDeleteModel):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE,related_name='projects')
     status = models.BooleanField(default=False)
     technology = models.JSONField(blank=True, default=list)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
+
 
     objects = SoftDeleteManager()
     all_objects = models.Manager()
