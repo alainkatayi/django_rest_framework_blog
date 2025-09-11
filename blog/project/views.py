@@ -7,10 +7,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Projects
 from rest_framework.generics import ListAPIView
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create your views here.
 class ProjectCreateView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
     def post(self,request):
         serializer = ProjectSerializer(data=request.data)
         if serializer.is_valid():
