@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from .pagination import ArticlePagination
 from rest_framework.filters import SearchFilter
 from rest_framework.parsers import MultiPartParser, FormParser
+from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
 class ArticleCreatedView(APIView):
@@ -68,8 +69,9 @@ class ArticleList(ListAPIView):
     serializer_class = ArticleSerializer
     pagination_class = ArticlePagination
     
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter,DjangoFilterBackend]
     search_fields = ['title','content']
+    filterset_fields = ['category__name']
 
 class ArticleUniqueView(APIView):
     permission_classes=[AllowAny]
